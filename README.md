@@ -6,7 +6,7 @@ A simple Node.js CLI tool to render Twig templates to HTML for design testing.
 
 - Render `.twig` templates with JSON context data
 - Automatically output to `output/<template>.html`
-- Auto-creates output directory if missing
+- Supports Twig namespaces like `@components`
 
 ## Prerequisites
 
@@ -43,40 +43,23 @@ twig-template-renderer/
 ├── index.js            # CLI entry point
 ├── templates/          # Twig templates
 │   └── example.twig
+├── components/         # Shared Twig components (used with @components)
+│   ├── base.twig
+│   └── salutation.twig
 ├── context/            # JSON context files
 │   └── example.json
 └── output/             # Rendered HTML files
 ```
 
-## Example Template (`templates/example.twig`)
+## Example Template with Namespace Support (`templates/example.twig`)
+
+You can use Twig namespace syntax in templates:
 
 ```twig
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{{ subject }}</title>
-  <style>
-    body { font-family: Arial, sans-serif; }
-    .header { background: #f5f5f5; padding: 20px; text-align: center; }
-    .content { padding: 20px; }
-    .footer { background: #f5f5f5; padding: 10px; text-align: center; font-size: 12px; color: #888; }
-  </style>
-</head>
-<body>
-  <div class="header">
-    <h1>{{ header_text }}</h1>
-  </div>
-  <div class="content">
-    <p>Hello {{ user.name }},</p>
-    <p>{{ body }}</p>
-  </div>
-  <div class="footer">
-    <p>{{ footer_text }}</p>
-  </div>
-</body>
-</html>
+{% extends '@components/base.twig' %}
+{% block content %}
+  {% include '@components/salutation.twig' %}
+{% endblock %}
 ```
 
 ## Example Context (`context/example.json`)

@@ -29,11 +29,24 @@ const Twig = require("twig");
     if (!fs.existsSync(ctxPath))
       throw new Error(`Context not found: ${ctxPath}`);
 
-    const templateString = fs.readFileSync(tplPath, "utf8");
     const context = JSON.parse(fs.readFileSync(ctxPath, "utf8"));
 
     // Compile and render
-    const template = Twig.twig({ data: templateString });
+    const template = Twig.twig({
+      path: tplPath,
+      async: false,
+      namespaces: {
+        components: path.join(__dirname, "components"),
+      },
+    });
+
+    // Check if template was loaded successfully before calling render
+    if (!template || typeof template.render !== "function") {
+      throw new Error(
+        "Failed to load or compile the Twig template. Check template paths and syntax."
+      );
+    }
+
     const html = template.render(context);
 
     // Output file named after template in output/ directory
@@ -45,6 +58,9 @@ const Twig = require("twig");
     console.log(`Rendered HTML written to ${outputPath}`);
   } catch (err) {
     console.error(`Error: ${err.message}`);
+    if (err.stack) {
+      console.error(err.stack);
+    }
     process.exit(1);
   }
 })();
