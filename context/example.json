@@ -1,0 +1,9 @@
+{
+  "subject": "Welcome to Our Service!",
+  "header_text": "Thanks for Signing Up",
+  "user": {
+    "name": "John Doe"
+  },
+  "body": "We're excited to have you on board. To get started, please verify your email address.",
+  "footer_text": "&copy; 2025 My Company"
+}

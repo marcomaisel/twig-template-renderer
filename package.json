@@ -1,0 +1,14 @@
+{
+  "name": "twig-template-renderer",
+  "version": "1.0.0",
+  "description": "CLI tool to render Twig templates to HTML",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "twig": "^1.15.3",
+    "yargs": "^17.0.1",
+    "mkdirp": "^1.0.4"
+  }
+}
